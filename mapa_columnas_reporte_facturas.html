@@ -1,0 +1,242 @@
+
+<style>
+  .wrap { padding: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: #1F4E79; color: #fff; }
+  thead th { padding: 10px 10px; text-align: left; font-weight: 500; font-size: 12px; }
+  tbody tr:nth-child(even) { background: var(--color-background-secondary); }
+  tbody tr:hover { background: #DDE8F5; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--color-border-tertiary); vertical-align: top; }
+  .col-n { color: var(--color-text-secondary); font-size: 11px; width: 28px; }
+  .col-letra { font-weight: 500; font-family: var(--font-mono); font-size: 12px; width: 24px; }
+  .col-nombre { font-weight: 500; color: var(--color-text-primary); }
+  .col-fuente { width: 130px; }
+  .col-campo { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-secondary); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .b-mb5s  { background: #C0DD97; color: #27500A; }
+  .b-oc    { background: #B5D4F4; color: #0C447C; }
+  .b-em    { background: #F5C4B3; color: #712B13; }
+  .b-calc  { background: #CECBF6; color: #3C3489; }
+  .b-id    { background: #D3D1C7; color: #444441; }
+  .legend  { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); }
+  .section-header td { background: #F1EFE8; color: #444441; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; padding: 5px 10px; }
+  h2 { font-size: 15px; font-weight: 500; margin-bottom: 4px; color: var(--color-text-primary); }
+  p.sub { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 14px; }
+</style>
+<div class="wrap">
+  <h2>Trazabilidad de columnas — Hoja "Saldos por Facturar"</h2>
+  <p class="sub">Cada columna del reporte y su transacción SAP de origen</p>
+  <div class="legend">
+    <div class="leg-item"><span class="badge b-mb5s">MB5S</span> FACTURAS_TEMP</div>
+    <div class="leg-item"><span class="badge b-oc">ME2N</span> OC_TEMP</div>
+    <div class="leg-item"><span class="badge b-em">MB51</span> ENTREGA_MERCANCIAS_TEMP</div>
+    <div class="leg-item"><span class="badge b-calc">Calculado</span> Fórmula en macro M3</div>
+    <div class="leg-item"><span class="badge b-id">ID interno</span> Generado por macro</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Col</th>
+        <th>Nombre en reporte</th>
+        <th>Fuente / Transacción</th>
+        <th>Campo origen en archivo TEMP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="section-header"><td colspan="5">Datos de la Orden de Compra (base del cruce)</td></tr>
+      <tr>
+        <td class="col-n">1</td><td class="col-letra">A</td>
+        <td class="col-nombre">Documento compras</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. A</td>
+      </tr>
+      <tr>
+        <td class="col-n">2</td><td class="col-letra">B</td>
+        <td class="col-nombre">Posición</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. B</td>
+      </tr>
+      <tr>
+        <td class="col-n">3</td><td class="col-letra">C</td>
+        <td class="col-nombre">ID</td>
+        <td><span class="badge b-id">ID interno</span></td>
+        <td class="col-campo">Concatenación col. A + B (sin separador)</td>
+      </tr>
+      <tr>
+        <td class="col-n">4</td><td class="col-letra">D</td>
+        <td class="col-nombre">Proveedor (código)</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. C</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Datos del proveedor y descripción (cruce ME2N)</td></tr>
+      <tr>
+        <td class="col-n">5</td><td class="col-letra">E</td>
+        <td class="col-nombre">Nombre (proveedor)</td>
+        <td><span class="badge b-oc">ME2N</span></td>
+        <td class="col-campo">OC_TEMP col. E — prefijo numérico eliminado</td>
+      </tr>
+      <tr>
+        <td class="col-n">6</td><td class="col-letra">F</td>
+        <td class="col-nombre">Material</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. D</td>
+      </tr>
+      <tr>
+        <td class="col-n">7</td><td class="col-letra">G</td>
+        <td class="col-nombre">Descripción</td>
+        <td><span class="badge b-oc">ME2N</span></td>
+        <td class="col-campo">OC_TEMP col. G</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Valores y cantidades (MB5S)</td></tr>
+      <tr>
+        <td class="col-n">8</td><td class="col-letra">H</td>
+        <td class="col-nombre">Precio neto pedido</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. E</td>
+      </tr>
+      <tr>
+        <td class="col-n">9</td><td class="col-letra">I</td>
+        <td class="col-nombre">Moneda (precio pedido)</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. F</td>
+      </tr>
+      <tr>
+        <td class="col-n">10</td><td class="col-letra">J</td>
+        <td class="col-nombre">Cantidad base</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. G</td>
+      </tr>
+      <tr>
+        <td class="col-n">11</td><td class="col-letra">K</td>
+        <td class="col-nombre">Unidad medida pedido</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. H</td>
+      </tr>
+      <tr>
+        <td class="col-n">12</td><td class="col-letra">L</td>
+        <td class="col-nombre">Valor entrada mcía.</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. I</td>
+      </tr>
+      <tr>
+        <td class="col-n">13</td><td class="col-letra">M</td>
+        <td class="col-nombre">Impte.fact.reg.ML</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. J</td>
+      </tr>
+      <tr>
+        <td class="col-n">14</td><td class="col-letra">N</td>
+        <td class="col-nombre">Moneda (importe factura)</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. K</td>
+      </tr>
+      <tr>
+        <td class="col-n">15</td><td class="col-letra">O</td>
+        <td class="col-nombre">Cantidad de pedido</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. L</td>
+      </tr>
+      <tr>
+        <td class="col-n">16</td><td class="col-letra">P</td>
+        <td class="col-nombre">Cantidad entrada</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. M</td>
+      </tr>
+      <tr>
+        <td class="col-n">17</td><td class="col-letra">Q</td>
+        <td class="col-nombre">Cantidad facturada</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. N</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Saldos calculados (fórmulas M3)</td></tr>
+      <tr>
+        <td class="col-n">18</td><td class="col-letra">R</td>
+        <td class="col-nombre">Saldo por facturar (moneda proveedor)</td>
+        <td><span class="badge b-calc">Calculado</span></td>
+        <td class="col-campo">(H / J) × (P − Q)  →  precio_unit × (cant_entrada − cant_facturada)</td>
+      </tr>
+      <tr>
+        <td class="col-n">19</td><td class="col-letra">S</td>
+        <td class="col-nombre">Moneda (saldo)</td>
+        <td><span class="badge b-calc">Calculado</span></td>
+        <td class="col-campo">Copia de col. I (moneda del precio pedido)</td>
+      </tr>
+      <tr>
+        <td class="col-n">20</td><td class="col-letra">T</td>
+        <td class="col-nombre">Saldo por entregar</td>
+        <td><span class="badge b-calc">Calculado</span></td>
+        <td class="col-campo">O − P  →  cant_pedido − cant_entrada</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Condiciones adicionales de la OC (MB5S)</td></tr>
+      <tr>
+        <td class="col-n">21</td><td class="col-letra">U</td>
+        <td class="col-nombre">UM precio pedido</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. O</td>
+      </tr>
+      <tr>
+        <td class="col-n">22</td><td class="col-letra">V</td>
+        <td class="col-nombre">Entrega final</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. P — si valor = "X" muestra "Pedido Concluido"</td>
+      </tr>
+      <tr>
+        <td class="col-n">23</td><td class="col-letra">W</td>
+        <td class="col-nombre">Organización compras</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. Q</td>
+      </tr>
+      <tr>
+        <td class="col-n">24</td><td class="col-letra">X</td>
+        <td class="col-nombre">Grupo de compras</td>
+        <td><span class="badge b-mb5s">MB5S</span></td>
+        <td class="col-campo">FACTURAS_TEMP col. R</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Datos de recepción física (cruce MB51)</td></tr>
+      <tr>
+        <td class="col-n">25</td><td class="col-letra">Y</td>
+        <td class="col-nombre">Guía remisión (puede no ser preciso)</td>
+        <td><span class="badge b-em">MB51</span></td>
+        <td class="col-campo">ENTREGA_MERCANCIAS_TEMP col. N</td>
+      </tr>
+      <tr>
+        <td class="col-n">26</td><td class="col-letra">Z</td>
+        <td class="col-nombre">Fecha de ingreso</td>
+        <td><span class="badge b-em">MB51</span></td>
+        <td class="col-campo">ENTREGA_MERCANCIAS_TEMP col. I</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Datos del pedido (cruce ME2N)</td></tr>
+      <tr>
+        <td class="col-n">27</td><td class="col-letra">AA</td>
+        <td class="col-nombre">Fecha orden</td>
+        <td><span class="badge b-oc">ME2N</span></td>
+        <td class="col-campo">OC_TEMP col. A</td>
+      </tr>
+      <tr>
+        <td class="col-n">28</td><td class="col-letra">AB</td>
+        <td class="col-nombre">Comprador</td>
+        <td><span class="badge b-oc">ME2N</span></td>
+        <td class="col-campo">OC_TEMP col. M</td>
+      </tr>
+
+      <tr class="section-header"><td colspan="5">Indicador de antigüedad</td></tr>
+      <tr>
+        <td class="col-n">29</td><td class="col-letra">AC</td>
+        <td class="col-nombre">Conteo días</td>
+        <td><span class="badge b-calc">Calculado</span></td>
+        <td class="col-campo">Fecha ingreso (Z) − Fecha hoy  →  días desde recepción</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:var(--color-text-secondary);margin-top:10px;">
+    Clave de cruce entre fuentes: Documento compras + Posición (col. C+D en OC_TEMP / col. A+B en FACTURAS_TEMP / col. C+D en ENTREGA_MERCANCIAS_TEMP)
+  </p>
+</div>
